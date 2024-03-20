@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  # game7Api:
+  #   image: node:latest
+  #   volumes:
+  #     - ./:/app
+  #   ports:
+  #     - 4000:4000
+  #   working_dir: /app
+  #   command: bash -c "yarn && yarn dev"
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: app_db
