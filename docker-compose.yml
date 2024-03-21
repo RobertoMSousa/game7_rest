@@ -1,14 +1,18 @@
 version: '3.5'
 
 services:
-  # game7Api:
-  #   image: node:latest
-  #   volumes:
-  #     - ./:/app
-  #   ports:
-  #     - 4000:4000
-  #   working_dir: /app
-  #   command: bash -c "yarn && yarn dev"
+  game7Api:
+    image: node:latest
+    volumes:
+      - ./:/app
+    ports:
+      - 4000:4000
+    environment:
+      - DATABASE_URL=postgresql://admin:admin@postgres:5432/app_db?schema=public
+    depends_on:
+      - postgres
+    working_dir: /app
+    command: bash -c "yarn && yarn dev"
   postgres:
     image: postgres
     restart: always
