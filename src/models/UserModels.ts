@@ -41,4 +41,19 @@ export class UserModels {
       console.error('Error fetching users:', error);
     }
   }
+
+  // fetch user by id
+
+  async fetchUserById(id: number) {
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: id,
+        },
+      });
+      return user;
+    } catch (error) {
+      console.error('Error fetching user by id:', error);
+    }
+  }
 }
