@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-// import { CreateItem } from '../types/ItemTypes';
 
 
 type CreateItem = {
@@ -37,6 +36,15 @@ export class ItemModel {
           }
         },
       
+      },
+    });
+  }
+
+  // fetch item by id
+  async fetchItemById(id: number) {
+    return await prisma.item.findUnique({
+      where: {
+        id: id,
       },
     });
   }
