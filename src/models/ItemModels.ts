@@ -23,10 +23,21 @@ export class ItemModel {
   }
 
   async addItem(itemData: CreateItem) {
-    
     const newItem = await prisma.item.create({data: itemData});
     console.log('🚀  roberto --  ~ ItemRepository ~ addItem ~ newItem:', newItem);
   }
 
-  // Other data management methods
+  async getAllItems() {
+    return await prisma.item.findMany({
+      include: {
+        type: true, // Assuming 'type' is the relation name for ItemType in the Item model
+        itemPerks: {
+          include: {
+            perk: true, // Assuming 'perk' is the relation name in the ItemPerks model pointing to the Perk model
+          }
+        },
+      
+      },
+    });
+  }
 }

@@ -30,9 +30,13 @@ export class ItemController {
     const newItem = await this.itemService.createItem(itemData);
     res.json(newItem);
   }
-  async getAllItems(req: Request, res: Response) {
-    res.json({
-      message: 'Getting all the items'
-    });
+  async getAllItems(_req: Request, res: Response) {
+    try {
+      const itemList = await this.itemService.getAllItems();
+      res.json(itemList);  
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+    
   }
 }
