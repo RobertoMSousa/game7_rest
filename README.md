@@ -1,17 +1,22 @@
 # Fork the world
 
 ## Code structure
+The codebase was developed using express and typescript with Prisma ORM that connects to a Postgres DB, this option improves performance and safety enforcing some of the best practices in the industry.
+Alongside that, I used the MVC and SOLID principles that improve the code readability and maintainability diving the data layer from the controllers and the services following the latest industry standards.
+
+## DB design
+![DB design](game7.drawio.png)
 
 
 ## DOCKER
-You have a docker compose file tha will launch the application on port 4000 and the postGress DB on another container on port 5432
+You have a docker compose file tha will launch the application on port 4000 and the postGres DB on another container on port 5432
 You can use this link to access it
 ```
 postgresql://admin:admin@localhost:5432/app_db?schema=public
 ```
 
 ## Setup and seed the DB
-To start using the DB firt incorporate the schemas designed on Prima and seeed with some mock data running this commands once the postgress is up and running.
+To start using the DB firt incorporate the schemas designed on Prima and seeed with some mock data running this commands once the postgres is up and running.
 ```
 npx prisma migrate reset
 yarn seed:db
