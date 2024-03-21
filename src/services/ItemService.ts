@@ -12,11 +12,6 @@ export class ItemService {
   }
 
   async createItem(itemData: CreateItemInput) {
-    console.log(
-      '🚀  roberto --  ~ ItemService ~ createItem ~ itemData:',
-      itemData
-    );
-
     let perks: { perkId: number }[] = [];
     if (itemData.itemPerks) {
       const perksPromises = itemData.itemPerks?.map(async (perkData) => {
@@ -40,11 +35,7 @@ export class ItemService {
 
   async getAllItems() {
     const originalObjectList = await this.itemModel.getAllItems();
-    // console.log(
-    //   '🚀  roberto --  ~ ItemService ~ getAllItems ~ originalObject:',
-    //   originalObject
-    // );
-
+  
     const transformedObjectList = originalObjectList.map((originalObject) => {
       return {
         id: originalObject.id,
@@ -56,15 +47,6 @@ export class ItemService {
       };
     });
 
-    // const transformedObject = {
-    //   id: originalObject.id,
-    //   name: originalObject.name,
-    //   type: {
-    //     name: originalObject.type.name
-    //   },
-    //   itemPerks: originalObject.itemPerks.map(perk => perk.perk.name)
-    // };
     return transformedObjectList;
-    // return this.itemModel.getAllItems();
   }
 }
