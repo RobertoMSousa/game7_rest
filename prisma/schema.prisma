@@ -54,5 +54,5 @@ model InventoryItem {
   user    User  @relation(fields: [userId], references: [id])
   itemId  Int
   item    Item  @relation(fields: [itemId], references: [id])
-  count   Int   @default(1)
+  equipped Boolean @default(false)
 }
