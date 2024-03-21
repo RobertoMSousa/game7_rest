@@ -4,7 +4,7 @@
 
 
 ## DOCKER
-You have a docker compose file tha will lauch the application on port 4000 and the postGress DB on another container on port 5432
+You have a docker compose file tha will launch the application on port 4000 and the postGress DB on another container on port 5432
 You can use this link to access it
 ```
 postgresql://admin:admin@localhost:5432/app_db?schema=public
@@ -28,7 +28,7 @@ POST http://localhost:4000/api/v1/items
 {
 	"name": "super axe 2",
 	"typeName": "strenght",
-	"itemPerks":["one", "two"] // opional
+	"itemPerks":["one", "two"] // optional
 }
 ```
 - Get all the existing items
@@ -68,9 +68,9 @@ POST http://localhost:4000/api/v1/inventory/transfer
 
 ```json
 {
-	"userIdOrigin": 1,
-  "userIdDestination": 3,
-  "itemId":  2
+    "userIdOrigin": 1,
+    "userIdDestination": 3,
+    "itemId":  2
 }
 ```
 
@@ -81,7 +81,7 @@ POST http://localhost:4000/api/v1/inventory/equip
 ```json
 {
 	"userId": 3,
-  "itemId":  2
+    "itemId":  2
 }
 ```
 
@@ -95,7 +95,7 @@ GET http://localhost:4000/api/v1/users
 POST http://localhost:4000/api/v1/users
 ```json
 {
-	"email": "roberto5@mail.com"
+	"email": "roberto@mail.com"
 }
 ```
 
@@ -112,3 +112,8 @@ yarn test:coverage
 ```
 
 ## Missing features
+- Swagger
+- Complete code coverage
+- Authentication
+- e2e test
+- Improve Docker build size bundle
