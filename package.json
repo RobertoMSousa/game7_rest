@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon ./src/server.ts",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "prisma_studio":"npx prisma studio"
   },
   "devDependencies": {
