@@ -22,6 +22,7 @@ yarn seed:db
 The whole API was built using express and support versioning, unfortunately, there's no swagger but will add it if I have permission to exceed the suggested time.
 ### Items
 - Create a new item
+
 POST http://localhost:4000/api/v1/items
 ```json
 {
@@ -31,20 +32,66 @@ POST http://localhost:4000/api/v1/items
 }
 ```
 - Get all the existing items
+
 GET http://localhost:4000/api/v1/items
 
 ### Inventory
 - Add item to user inventory
-- delete item from user inventory
-- list all the items that an use has on the inventory
-- transfer item between 2 user
-- equip and unequip item 
+
+POST http://localhost:4000/api/v1/inventory
+```json
+{
+	"userId": 1,
+	"itemId": 2
+}
+```
+
+- Delete item from user inventory
+
+DELETE http://localhost:4000/api/v1/inventory
+
+```json
+{
+	"userId": 1,
+	"itemId": 2
+}
+```
+
+- List all the items that an use has on the inventory
+
+GET http://localhost:4000/api/v1/inventory/:USERID
+
+
+- Transfer item between 2 user
+
+POST http://localhost:4000/api/v1/inventory/transfer
+
+```json
+{
+	"userIdOrigin": 1,
+  "userIdDestination": 3,
+  "itemId":  2
+}
+```
+
+- Equip and unequip item 
+
+POST http://localhost:4000/api/v1/inventory/equip
+
+```json
+{
+	"userId": 3,
+  "itemId":  2
+}
+```
 
 ### Users
 - Get all the users
+
 GET http://localhost:4000/api/v1/users
 
 - Create a new user
+
 POST http://localhost:4000/api/v1/users
 ```json
 {
@@ -52,11 +99,6 @@ POST http://localhost:4000/api/v1/users
 }
 ```
 
-GET /items: Fetch all items in the inventory.
-POST /items: Add a new item to the inventory.
-DELETE /items/:id: Remove an item from the inventory.
-POST /transfer: Transfer an item between users.
-POST /equip: Equip an item to a user.
 
 ## Unit tests
 I created some unit tests using jest on some part of the code, due to time constrains it was possible o create a fully tested application but you can run the tests using
