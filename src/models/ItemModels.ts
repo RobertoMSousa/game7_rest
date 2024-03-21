@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 
-
 type CreateItem = {
   name: string;
   typeId: number;
@@ -8,7 +7,6 @@ type CreateItem = {
     create: Array<{ perkId: number }>;
   };
 };
-
 
 const prisma = new PrismaClient();
 
@@ -22,25 +20,28 @@ export class ItemModel {
   }
 
   async addItem(itemData: CreateItem) {
-    const newItem = await prisma.item.create({data: itemData});
-    console.log('🚀  roberto --  ~ ItemRepository ~ addItem ~ newItem:', newItem);
+    return await prisma.item.create({ data: itemData });
   }
 
   async getAllItems() {
     return await prisma.item.findMany({
       include: {
-        type: true, // Assuming 'type' is the relation name for ItemType in the Item model
+        type: true, 
         itemPerks: {
           include: {
-            perk: true, // Assuming 'perk' is the relation name in the ItemPerks model pointing to the Perk model
-          }
+            perk: true,
+          },
         },
-      
       },
     });
   }
 
-  // fetch item by id
+  /**
+   * Fetches an item by its ID.
+   *
+   * @param {number} id - The ID of the item to fetch.
+   * @return {Promise<Item>} A promise that resolves to the fetched item.
+   */
   async fetchItemById(id: number) {
     return await prisma.item.findUnique({
       where: {

@@ -16,19 +16,20 @@ export class InventoryService {
   }
 
   async addItemToIventory(userId: number, itemId: number) {
-
-    // check if user exists
-    const userExists = await this.userModels.fetchUserById(userId);
-    const itemExists = await this.itemModels.fetchItemById(itemId);
-    if (!userExists) {
-      throw new Error('User does not exist');
+    const [userExists, itemExists] = await Promise.all([
+      this.userModels.fetchUserById(userId),
+      this.itemModels.fetchItemById(itemId),
+    ]);
+    if (!userExists|| !itemExists) {
+      return {
+        code: 404,
+        error: 'User or item not found',
+        data: null
+      };
     }
-
-    // check if item exists
-    if (!itemExists) {
-      throw new Error('Item does not exist');
-    }
-    return this.inventoryModels.addItemToInvetory(userId, itemId);
+    
+    const inventoryResult = await this.inventoryModels.addItemToInvetory(userId, itemId);
+    return {data: inventoryResult};
   }
 
 }

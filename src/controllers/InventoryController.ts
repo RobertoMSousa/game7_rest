@@ -18,13 +18,19 @@ export class InventoryController {
         return res.status(400).json({ error: error.details[0].message });
       }
       const { userId, itemId } = req.body;
-
       
-      const newItem = await this.inventoryService.addItemToIventory(
+      const inventoryResponse = await this.inventoryService.addItemToIventory(
         userId,
         itemId
       );
-      res.json(newItem);
+
+      if (inventoryResponse.code === 404) {
+        res.statusCode = inventoryResponse.code;
+        res.end(inventoryResponse.error);
+        return;
+      }
+      
+      res.json(inventoryResponse.data);
     } catch (error) {
       return res.status(500).json(error);
     }

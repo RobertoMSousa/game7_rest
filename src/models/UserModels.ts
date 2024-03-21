@@ -19,16 +19,22 @@ export class UserModels {
       // throw error; // Or handle the error as appropriate for your application
     }
   }
+  
   async fetchAllUsers() {
     try {
       const users = await prisma.user.findMany();
       return users;
     } catch (error) {
       console.error('Error fetching users:', error);
-      // throw error; // Or handle the error as appropriate for your application
     }
   }
 
+  /**
+   * Fetches a user from the database based on their email.
+   *
+   * @param {string} email - The email of the user to fetch.
+   * @return {Promise<User | null>} A Promise that resolves to the fetched user object, or null if no user is found.
+   */
   async fetchUser(email: string) {
     try {
       const user = await prisma.user.findUnique({
@@ -42,8 +48,12 @@ export class UserModels {
     }
   }
 
-  // fetch user by id
-
+  /**
+   * Fetches a user by their ID.
+   *
+   * @param {number} id - The ID of the user to fetch.
+   * @return {Promise<User | null>} The user with the specified ID, or null if not found.
+   */
   async fetchUserById(id: number) {
     try {
       const user = await prisma.user.findUnique({
