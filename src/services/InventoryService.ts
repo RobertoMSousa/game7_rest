@@ -135,6 +135,40 @@ export class InventoryService {
     await this.inventoryModels.deleteItemFromInventoryById(findFirstInventoryItem.id);
     const addInventoryItem = await this.inventoryModels.addItemToInvetory(userIdDestination, itemId);
     return { data: addInventoryItem };
+  }
+  /**
+   * Equips an item from the user's inventory.
+   *
+   * @param {number} userId - The ID of the user.
+   * @param {number} itemId - The ID of the item to equip.
+   * @return {Promise<{ code: number, error: string, data: any } | { data: any }>} - A promise that resolves to an object with the equipped item response or an error object.
+   */
+  async equipItemFromInventory(
+    userId: number,
+    itemId: number
+  ) {
+    const [userExist, itemExists] = await Promise.all([
+      this.userModels.fetchUserById(userId),
+      this.itemModels.fetchItemById(itemId),
+    ]);
+    if (!userExist|| !itemExists) {
+      return {
+        code: 404,
+        error: 'User or item not found',
+        data: null,
+      };
+    }
 
+    const findFirstInventoryItem =
+      await this.inventoryModels.findFirstInventoryItem(userId, itemId);
+    if (!findFirstInventoryItem) {
+      return {
+        code: 404,
+        error: 'Item not found in user inventory',
+        data: null,
+      };
+    }    
+    const equippedItemResponse = await this.inventoryModels.equipItemFromInventoryById(findFirstInventoryItem.id, findFirstInventoryItem.equipped);
+    return { data: equippedItemResponse };
   }
 }

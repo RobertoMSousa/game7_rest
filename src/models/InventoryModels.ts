@@ -2,7 +2,6 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-
 export class InventoryModel {
   /**
    * Add the given item to the inventory for the given user.
@@ -54,7 +53,7 @@ export class InventoryModel {
           id,
         },
       });
-    
+
       console.log('Deleted inventory item:', deletedItem);
       return deletedItem;
     } catch (error) {
@@ -70,6 +69,24 @@ export class InventoryModel {
         },
       });
       return inventoryItems;
+    } catch (error) {
+      console.error('Error loading inventory items:', error);
+    }
+  }
+  async equipItemFromInventoryById(
+    inventoryItemId: number,
+    equippedState: boolean
+  ) {
+    try {
+      const toogleEquippedItem = await prisma.inventoryItem.update({
+        where: {
+          id: inventoryItemId,
+        },
+        data: {
+          equipped: !equippedState, // Toggle the equipped value
+        },
+      });
+      return toogleEquippedItem;
     } catch (error) {
       console.error('Error loading inventory items:', error);
     }

@@ -77,7 +77,13 @@ export class InventoryController {
     }
   }
 
-  // load the inventory for a specific user
+  /**
+   * Gets all items in the inventory for a specific user.
+   *
+   * @param {Request} req - The request object.
+   * @param {Response} res - The response object.
+   * @return {Promise<void>} The function does not return anything.
+   */
   async getAllUserInventory(req: Request, res: Response) {
     try {
       const userId = parseInt(req.params.id);
@@ -90,6 +96,13 @@ export class InventoryController {
     }
   }
 
+  /**
+   * Transfers an item from one user's inventory to another.
+   *
+   * @param {Request} req - the request object
+   * @param {Response} res - the response object
+   * @return {Promise<void>} - a promise that resolves to void
+   */
   async transferItemFromInventory(req: Request, res: Response) {
     try {
       const { error } = transferItemToInventorySchema.validate(req.body);
@@ -108,6 +121,35 @@ export class InventoryController {
         await this.inventoryService.transferItemFromInventory(
           userIdOrigin,
           userIdDestination,
+          itemId
+        );
+      if (inventoryResponse.code === 404) {
+        res.statusCode = inventoryResponse.code;
+        res.end(inventoryResponse.error);
+        return;
+      }
+      res.json(inventoryResponse.data);
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  }
+  /**
+   * A function to equip an item from the inventory.
+   *
+   * @param {Request} req - the request object
+   * @param {Response} res - the response object
+   * @return {Promise<void>} a promise that resolves with no value
+   */
+  async equipItemFromInventory(req: Request, res: Response) {
+    try {
+      const { error } = addItemToInventorySchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+      }
+      const { userId, itemId } = req.body;
+      const inventoryResponse =
+        await this.inventoryService.equipItemFromInventory(
+          userId,
           itemId
         );
       if (inventoryResponse.code === 404) {

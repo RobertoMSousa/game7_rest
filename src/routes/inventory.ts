@@ -12,6 +12,7 @@ InventorysRouter.get('/:id', (req: Request, res: Response) => inventoryControlle
 InventorysRouter.post('/', (req: Request, res: Response) => inventoryController.addItemToInventory(req, res));
 InventorysRouter.delete('/', (req: Request, res: Response) => inventoryController.deleteItemFromInventory(req, res));
 InventorysRouter.post('/transfer', (req: Request, res: Response) => inventoryController.transferItemFromInventory(req, res));
+InventorysRouter.post('/equip', (req: Request, res: Response) => inventoryController.equipItemFromInventory(req, res));
 
 
 export default InventorysRouter;
