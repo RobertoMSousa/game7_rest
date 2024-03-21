@@ -2,7 +2,12 @@ import { UserModels } from './../models/UserModels';
 import { CreateUserInput } from '../types/UserTypes';
 
 export class UserService {
-  constructor(private userModels: UserModels) {}
+  
+  private userModels: UserModels;
+
+  constructor() {
+    this.userModels = new UserModels();
+  }
 
   async createUser(userData: CreateUserInput) {
     return this.userModels.addUser(userData);
@@ -16,5 +21,4 @@ export class UserService {
     return this.userModels.fetchUser(email);
   }
 
-  // Other methods like deleteUse, transferUse, etc.
 }

@@ -2,11 +2,10 @@ import { Router, Request, Response } from 'express';
 
 import { ItemController } from '../controllers/ItemController';
 import { ItemService } from '../services/ItemService';
-import { ItemRepository } from '../models/ItemModels';
 const itemsRouter = Router();
 
-const itemRepository = new ItemRepository();
-const itemService = new ItemService(itemRepository);
+
+const itemService = new ItemService();
 const itemController = new ItemController(itemService);
 
 

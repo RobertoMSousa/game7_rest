@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon ./src/server.ts",
-    "test": "jest"
+    "test": "jest",
+    "prisma_studio":"npx prisma studio"
   },
   "devDependencies": {
     "@prisma/client": "^5.11.0",

@@ -1,13 +1,38 @@
-import { ItemRepository } from '../models/ItemModels';
+import { PerkModel } from './../models/PerkModels';
+import { ItemModel } from '../models/ItemModels';
 import { CreateItemInput } from '../types/ItemTypes';
 
 export class ItemService {
-  constructor(private itemRepository: ItemRepository) {}
+  private itemModel: ItemModel;
+  private perkModel: PerkModel;
 
-  async createItem(itemData: CreateItemInput) {
-    // Business logic here, like validating data, applying business rules
-    return this.itemRepository.addItem(itemData);
+  constructor() {
+    this.itemModel = new ItemModel();
+    this.perkModel = new PerkModel();
   }
 
-  // Other methods like deleteItem, transferItem, etc.
+  async createItem(itemData: CreateItemInput) {
+  console.log('🚀  roberto --  ~ ItemService ~ createItem ~ itemData:', itemData);
+  
+    let perks :{perkId: number}[] = [];
+    if (itemData.itemPerks) {
+      
+      const perksPromises = itemData.itemPerks?.map(async (perkData) => {
+        const perk = await this.perkModel.addPerk(perkData);
+        return { perkId: perk.id };
+      });
+
+      perks = await Promise.all(perksPromises);
+    }
+
+    const itemType = await this.itemModel.createItemType(itemData.typeName);
+
+    return this.itemModel.addItem({
+      name: itemData.name,
+      typeId: itemType.id,
+      itemPerks: {
+        create: perks,
+      },
+    });
+  }
 }
