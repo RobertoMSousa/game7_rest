@@ -10,6 +10,4 @@ export class PerkModel {
       create: { name: perkName },
     });
   }
-
-  // Other data management methods
 }
